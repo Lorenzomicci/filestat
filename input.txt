@@ -1,0 +1,3 @@
+/Users/lorenzo/Documents/Università/SO_Lab/libc/progetto/filestat r
+/Users/lorenzo/Documents/Università/SO_Lab/libc/progetto/filestat l
+/Users/lorenzo/Documents/Università/SO_Lab/libc/progetto/filestat r
