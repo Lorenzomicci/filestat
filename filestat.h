@@ -7,6 +7,7 @@
 #include <unistd.h>
 #include <errno.h>
 #include <sys/mman.h>
+#include <fnmatch.h>
 
 #include "global.h"
 
@@ -88,17 +89,15 @@ f_open(void) {
 }
 
 
+int
+lines_number(const char *buffer){
+  int res = 0;
 
-
-void
-trackLines (char *buffer, int charsRead) {
-  /* Store offsets of each line start in buffer */
-  int i;
-  for (i = 0; i < charsRead; i++) {
-     ++fileOffset; /* Update current file position */
-     if (buffer[i] == '\n') lineStart[++lineCount] = fileOffset; // Put line per line in a block of linestart
-  }
+  while(res = fnmatch(pattern,buffer,FNM_NOESCAPE) == 0 ){
+   lines++;
+ }
 }
+
 
 char *
 f_read(int fd){
@@ -107,7 +106,6 @@ char i = 0;
 int l = 0;
 ssize_t charsRead = 0;
 size_t nbytes = sizeof(filePath);
-char line[][];
 
    if(verbose==1) {
    printf("Reading file...\n");
@@ -123,11 +121,48 @@ char line[][];
      break;
    }
    buffer[l++] = i;
-   trackLines (buffer, charsRead); /* Process line */
   }
   lineStart[lineCount] = fileOffset;
   return buffer;
 }
+
+
+
+
+
+
+
+
+//
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

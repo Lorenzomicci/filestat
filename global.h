@@ -2,8 +2,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-const char *pattern[2] = {"\n"};
 
+
+/*Filestat variables*/
+const char *pattern = " ";
+int lines = 0;
+
+/*Parameters variables*/
 int verbose = 0;
 int statistic = 0;
 int report = 0;

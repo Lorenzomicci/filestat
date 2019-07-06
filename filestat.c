@@ -99,11 +99,11 @@ main(int argc, char **argv) {
     printf("file %s open\n",fileIn);
   //readfile(filedes,filePath,BUFFER_SIZE);
   buffer =  f_read(filedes);
+  lines_number(buffer);
+  printf("lines: %d\n",lines);
 }
 
 //  int fnmatch (const char *pattern, const char *string, int flags)
-
-fnmatch(pattern,buffer,FNM_FILE_NAME);
 
  while (1) {
 
