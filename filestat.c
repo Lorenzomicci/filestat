@@ -16,6 +16,7 @@
 
 /* Prototypes */
 void optionsManage(int argc, char const *argv[]);
+FILE * fdopen (int filedes, const char *opentype);
 /*--------------------*/
 
 /* Global */
@@ -75,7 +76,7 @@ main(int argc, char **argv) {
 
   int c;
   int param_ok = 0;
-  int matchResult = 0;
+  FILE * pf = NULL;
 
   printf("%d",argc);
 
@@ -96,14 +97,18 @@ main(int argc, char **argv) {
 
   if(param_ok == 1) {
   int filedes = f_open();
-    printf("file %s open\n",fileIn);
+  printf("file %s open\n",fileIn);
+  //buffer =  f_read(filedes);
+  pf = fdopen(filedes,"rw");
+  get_lines(pf);
+  fflush(pf);
   //readfile(filedes,filePath,BUFFER_SIZE);
-  buffer =  f_read(filedes);
-  lines_number(buffer);
-  printf("lines: %d\n",lines);
 }
 
 //  int fnmatch (const char *pattern, const char *string, int flags)
+
+//matchResult = fnmatch(pattern,buffer,FNM_FILE_NAME);
+
 
  while (1) {
 

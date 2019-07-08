@@ -8,8 +8,11 @@
 #include <errno.h>
 #include <sys/mman.h>
 #include <fnmatch.h>
+#include <stddef.h>
+#include <wchar.h>
 
 #include "global.h"
+
 
 
 /* #define Statements */
@@ -27,7 +30,7 @@ char *fileIn = NULL;  /* First option in program */
 char *filePath [BUFFER_SIZE];  /* Path read from input file */
 char tmpName [NAME_SIZE];
 const char *buffer = NULL;
-
+char **app = NULL;
 int lineCount = 0; /* Total number of lines in input */
 int lineStart [MAX_LINES]; /* Store offsets of each line */
 int fileOffset = 0; /* Current position in input */
@@ -39,6 +42,10 @@ mode_t mode = O_WRONLY|O_TRUNC; /*Mode only for write*/
 mode_t readmode = O_RDONLY;
 
 
+typedef struct path{
+  char *path;
+  char option;
+}path;
 
 
 int
@@ -89,13 +96,50 @@ f_open(void) {
 }
 
 
-int
-lines_number(const char *buffer){
-  int res = 0;
+void
+line_manage(char *line,int lines){
 
-  while(res = fnmatch(pattern,buffer,FNM_NOESCAPE) == 0 ){
-   lines++;
+  const char del[] = " ";
+  char *p;
+  int i = 0;
+
+  for(p=strtok(line,del); p!=NULL; p=strtok(NULL,del)){
+    inputData[i].path = p;
+  }
+
+}
+
+
+
+void
+lines_number(FILE *stream){
+  size_t nread;
+  char *line = NULL;
+  size_t len = 0;
+
+  while ((nread = getline(&line, &len, stream)) != -1) {
+     lines++;
  }
+
+
+}
+
+
+void
+get_lines(FILE *stream){
+  size_t nread = 0;
+  char *line = NULL;
+  size_t len = 0;
+
+  lines_number(stream);
+
+  while ((nread = getline(&line, &len, stream)) != -1) {
+              printf("%s\n",line);
+              line_manage(line,lines);
+          }
+
+   free(line);
+   fclose(stream);
 }
 
 
