@@ -8,7 +8,6 @@
 const char *pattern = "\n";
 int lines = 0;
 
-path inputData[lines];
 
 
 

@@ -24,6 +24,14 @@
 #define PERM 755
 
 /* Globals */
+
+typedef struct path{
+  char *path;
+  char *option;
+}path;
+
+
+
 char *fileName = NULL; /* Points to file name */
 char *fileOut = NULL;  /* Points to output file */
 char *fileIn = NULL;  /* First option in program */
@@ -34,6 +42,8 @@ char **app = NULL;
 int lineCount = 0; /* Total number of lines in input */
 int lineStart [MAX_LINES]; /* Store offsets of each line */
 int fileOffset = 0; /* Current position in input */
+path inputData[MAX_LINES];
+int i=0;
 
 int recoursive = 0; /* r mode on file activated flag */
 int option_index = 0;
@@ -42,10 +52,6 @@ mode_t mode = O_WRONLY|O_TRUNC; /*Mode only for write*/
 mode_t readmode = O_RDONLY;
 
 
-typedef struct path{
-  char *path;
-  char option;
-}path;
 
 
 int
@@ -96,26 +102,52 @@ f_open(void) {
 }
 
 
-void
-line_manage(char *line,int lines){
+int
+line_manage(char *line){
 
-  const char del[] = " ";
-  char *p;
-  int i = 0;
+  char *string;
+  char *tok;
 
-  for(p=strtok(line,del); p!=NULL; p=strtok(NULL,del)){
-    inputData[i].path = p;
-  }
+  // set up the input, like this to show use of `strdup` and `free`
+  string = strdup(line);       // allocate memory for source string
+  if (string == NULL)                     // check it worked
+      return 1;                           // failure
+
+  // student name
+  tok = strtok(string, " ");              // isolate first token
+  if (tok == NULL)                        // check it worked
+      return 1;                           // failure
+  inputData[i].path = strdup(tok);         // allocated mem for substring and copy
+  printf("path: %s\n", inputData[i].path);
+  if (inputData[i].path == NULL)               // check it worked
+      return 1;                           // failure
+
+
+  // student number
+  tok = strtok(NULL, " ");                // isolate next token
+  if (tok == NULL)                        // check it worked
+      return 1;                           // failure
+  inputData[i].option = strdup(tok);      // extract int
+  printf("option: %s\n", inputData[i].option);
+      return 1;                           // failure
+
+
+  i++;
+
+  free(string);                           // can now get rid of source data
+  free(line);
+  free(inputData);
 
 }
 
 
-
+/*
 void
 lines_number(FILE *stream){
   size_t nread;
   char *line = NULL;
   size_t len = 0;
+
 
   while ((nread = getline(&line, &len, stream)) != -1) {
      lines++;
@@ -123,7 +155,7 @@ lines_number(FILE *stream){
 
 
 }
-
+*/
 
 void
 get_lines(FILE *stream){
@@ -131,11 +163,12 @@ get_lines(FILE *stream){
   char *line = NULL;
   size_t len = 0;
 
-  lines_number(stream);
+  //lines_number(stream);
 
   while ((nread = getline(&line, &len, stream)) != -1) {
               printf("%s\n",line);
-              line_manage(line,lines);
+              line_manage(line);
+              lines++;
           }
 
    free(line);
