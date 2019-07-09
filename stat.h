@@ -5,20 +5,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <errno.h>
-
- /*GLobal*/
-const char *filename = NULL;
-int fd;
-struct stat *filestat;
-
-
-int
-f_stat(const char *filename, struct stat *buf){
-   int res = 0;
-     res = stat(filename,buf);
-   return res;
-}
-
+#include <time.h>
 
 /*
 this system calls return a stat structure, which contains the
@@ -109,3 +96,49 @@ st_mtime
 st_ctime
        This is the file's last status change timestamp.
 */
+
+
+ /*GLobal*/
+const char *filename = NULL;
+int fd;
+
+char * format_time(time_t cal_time)
+{
+  struct tm *time_struct;
+  static char string[30];
+				/* Put the calendar time into a structure
+				 * if type 'tm'.			*/
+  time_struct=localtime(&cal_time);
+
+				/* Build a formatted date from the
+				 * structure.				*/
+  strftime(string, sizeof string, "%h %e %H:%M\n", time_struct);
+
+				/* Return the date/time			*/
+  return(string);
+}
+
+void
+file_stat(char * filename) {
+  struct stat stat_p;		/* 'stat_p' is a pointer to a structure
+				 * of type 'stat'.  			*/
+
+				/* Get stats for file and place them in
+				 * the structure.			*/
+  if ( -1 ==  stat (filename, &stat_p))
+  {
+    printf(" Error occoured attempting to stat %s\n", filename);
+  }
+				/* Print a few structure members.	*/
+
+  printf("Stats for %s \n", filename);
+
+  printf("Modify time is %s\n", format_time(stat_p.st_mtime));
+
+				/* Access time does not get updated
+				   if the filesystem is NFS mounted!	*/
+
+  printf("Access time is %s\n", format_time(stat_p.st_atime));
+
+  printf("File size is   %lld bytes\n", stat_p.st_size);
+}

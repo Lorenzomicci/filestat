@@ -113,7 +113,7 @@ line_manage(char *line){
   if (string == NULL)                     // check it worked
       return 1;                           // failure
 
-  // student name
+  // path
   tok = strtok(string, " ");              // isolate first token
   if (tok == NULL)                        // check it worked
       return 1;                           // failure
@@ -123,7 +123,7 @@ line_manage(char *line){
       return 1;                           // failure
 
 
-  // student number
+  // option
   tok = strtok(NULL, " ");                // isolate next token
   if (tok == NULL)                        // check it worked
       return 1;                           // failure

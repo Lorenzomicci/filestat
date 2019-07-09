@@ -80,11 +80,11 @@ main(int argc, char **argv) {
 
   printf("%d",argc);
 
-  /*
+
   if(argc<4){
      usage(EXIT_FAILURE);
   }
-  */
+
 
   fileIn = argv[2];  //[2]
   fileOut = argv[3]; // [3]
@@ -160,14 +160,10 @@ main(int argc, char **argv) {
 
   if(statistic){
     int i=0;
-    int ret=0;
     for(i=0;i<lines;i++){
-      ret=f_stat(inputData[i].path,filestat);
-        if(ret==0)
-      printf(" (%3o)",filestat->st_mode);
-        else fatalError();
+      file_stat(inputData[i].path);
+      }
     }
-  }
 
 
 

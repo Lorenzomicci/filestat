@@ -1,1 +1,1 @@
-/home/yoda/Documents/git/filestat/input.txt r
+/Users/lorenzo/Documents/Università/SO_Lab/libc/progetto/filestat r
