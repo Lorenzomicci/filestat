@@ -36,7 +36,7 @@ static struct
 
 void
 fatalError(void){
-  perror("filestat : ");
+  perror("filestat  ");
   exit(1);
 }
 
@@ -86,8 +86,8 @@ main(int argc, char **argv) {
   }
   */
 
-  fileIn = argv[1];  //[2]
-  fileOut = argv[2]; // [3]
+  fileIn = argv[2];  //[2]
+  fileOut = argv[3]; // [3]
 
   printf("params: \n");
   printf("\%s\n" "%s\n"
@@ -158,8 +158,15 @@ main(int argc, char **argv) {
 
 
 
-  if(verbose){
-
+  if(statistic){
+    int i=0;
+    int ret=0;
+    for(i=0;i<lines;i++){
+      ret=f_stat(inputData[i].path,filestat);
+        if(ret==0)
+      printf(" (%3o)",filestat->st_mode);
+        else fatalError();
+    }
   }
 
 

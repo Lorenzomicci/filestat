@@ -118,7 +118,7 @@ line_manage(char *line){
   if (tok == NULL)                        // check it worked
       return 1;                           // failure
   inputData[i].path = strdup(tok);         // allocated mem for substring and copy
-  printf("path: %s\n", inputData[i].path);
+  /*printf("path: %s\n", inputData[i].path);*/
   if (inputData[i].path == NULL)               // check it worked
       return 1;                           // failure
 
@@ -128,7 +128,7 @@ line_manage(char *line){
   if (tok == NULL)                        // check it worked
       return 1;                           // failure
   inputData[i].option = strdup(tok);      // extract int
-  printf("option: %s\n", inputData[i].option);
+  /*printf("option: %s\n", inputData[i].option);*/
       return 1;                           // failure
 
 
@@ -166,7 +166,7 @@ get_lines(FILE *stream){
   //lines_number(stream);
 
   while ((nread = getline(&line, &len, stream)) != -1) {
-              printf("%s\n",line);
+              /*printf("%s\n",line);*/
               line_manage(line);
               lines++;
           }
